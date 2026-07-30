@@ -56,8 +56,8 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 			l[23] = Vector3(s.x,s.y,e.z)
 			gizmo.add_lines(l,sel_line_mat,false) 
 
-func _get_handle_name(gizmo, handle_id, secondary):
-	return
+func _get_handle_name(gizmo, handle_id, secondary)->String:
+	return ""
 
 func _get_handle_value(gizmo: EditorNode3DGizmo, _id: int, _secondary: bool):
 	return

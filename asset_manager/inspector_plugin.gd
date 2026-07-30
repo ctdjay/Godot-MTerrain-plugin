@@ -5,7 +5,7 @@ var asset_library: MAssetTable = MAssetTable.get_singleton()# load(ProjectSettin
 var asset_placer
 var variation_layers_scene = preload("res://addons/m_terrain/asset_manager/ui/inspector/variation_layers/variation_layers.tscn")
 
-func _can_handle(object):				
+func _can_handle(object)->bool:
 	if object is MAssetTable:return true
 	if object is HLod_Baker: return true
 	if object is Node and object.owner and object.owner  is HLod_Baker: return true
@@ -16,6 +16,7 @@ func _can_handle(object):
 	if object is MDecalInstance: return true		
 	if object is MDecal: return true		
 	if object is Material: return true
+	return false
 	
 	var nodes = EditorInterface.get_selection().get_selected_nodes()
 	var selection_type

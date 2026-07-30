@@ -65,9 +65,10 @@ func add_asset_finished(do_regroup = true):
 	if do_regroup:
 		regroup()
 		
-func _can_drop_data(at_position: Vector2, data: Variant):		
+func _can_drop_data(at_position: Vector2, data: Variant)->bool:
 	if "files" in data and ".glb" in data.files[0]:
 		return true
+	return false
 
 func _drop_data(at_position, data):		
 	for file in data.files:

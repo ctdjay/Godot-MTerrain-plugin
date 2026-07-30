@@ -77,9 +77,10 @@ func _import_post(state: GLTFState, root: Node) -> Error:
 		#AssetIO.glb_load_assets(state, root.duplicate(), glb_path, {}, true )	
 	return OK
 	
-func _export_preflight(state: GLTFState, root: Node):			
+func _export_preflight(state: GLTFState, root: Node)->Error:
 	root.owner = null
-	replace_mmesh_lod_with_meshes(root, root)		
+	replace_mmesh_lod_with_meshes(root, root)
+	return Error.OK
 	
 func replace_mmesh_lod_with_meshes(scene_root, root):		
 	return
@@ -102,8 +103,9 @@ func replace_mmesh_lod_with_meshes(scene_root, root):
 			child.queue_free()
 		replace_mmesh_lod_with_meshes(scene_root, child)
 
-func _export_node(state: GLTFState, gltf_node: GLTFNode, json: Dictionary, node: Node):							
+func _export_node(state: GLTFState, gltf_node: GLTFNode, json: Dictionary, node: Node)->Error:
 	var extras = {}
 	for meta in node.get_meta_list():
 		extras[meta] = node.get_meta(meta)
 	json["extras"] = extras #node.get_meta("extras")	
+	return Error.OK

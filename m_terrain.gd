@@ -193,7 +193,7 @@ func selection_changed():
 
 	tools.on_selection_changed(selection[0])
 
-func _handles(object):
+func _handles(object)->bool:
 	if not Engine.is_editor_hint(): return false
 	if not current_main_screen_name == "3D":
 		tools.request_hide()
@@ -201,9 +201,10 @@ func _handles(object):
 	if asset_browser.asset_place_control.need_editor_input:
 		return true
 	tsnap.visible = false
-	if tools.on_handles(object): 		
+	if tools.on_handles(object): 
 		return true	
 	tsnap.visible = is_instance_valid(tools.active_snap_object)
+	return false
 
 func _forward_3d_gui_input(viewport_camera, event):
 	if not is_instance_valid(EditorInterface.get_edited_scene_root()): 

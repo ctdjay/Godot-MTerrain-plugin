@@ -103,8 +103,8 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 		gizmo.add_handles(h,get_material("hmat"),handle_ids)
 
 
-func _get_handle_name(gizmo, handle_id, secondary):
-	return
+func _get_handle_name(gizmo, handle_id, secondary)->String:
+	return ""
 
 func _get_handle_value(gizmo: EditorNode3DGizmo, _id: int, _secondary: bool):
 	return

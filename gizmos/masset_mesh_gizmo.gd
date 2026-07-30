@@ -64,8 +64,8 @@ func _redraw(gizmo: EditorNode3DGizmo) -> void:
 		# otherwise this is not going to be selectable
 		gizmo.add_lines(l,not_sel_line_mat,false)
 
-func _get_handle_name(gizmo, handle_id, secondary):
-	return
+func _get_handle_name(gizmo, handle_id, secondary)->String:
+	return ""
 
 func _get_handle_value(gizmo: EditorNode3DGizmo, _id: int, _secondary: bool):
 	return
