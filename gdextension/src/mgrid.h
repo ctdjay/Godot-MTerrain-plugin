@@ -129,6 +129,7 @@ class MGrid {
     private:
     bool _is_opengl=false;
     uint8_t _update_id=0; // Only for mesh update not for physics
+    
     MBrushManager* _brush_manager = nullptr;
     MPoint** points;
     MPoint* points_row;
@@ -194,6 +195,7 @@ class MGrid {
     int32_t regions_processing_physics = 1;
     int32_t region_limit = 2;
     RID space;
+    uint64_t instance_id;
     String dataDir;
     String layersDataDir;
     PackedInt32Array lod_distance;

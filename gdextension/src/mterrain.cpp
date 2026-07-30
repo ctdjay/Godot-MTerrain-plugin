@@ -300,6 +300,7 @@ void MTerrain::create_grid(){
     grid->_chunks.create_chunks(size_list[min_size_index],size_list[max_size_index],h_scale_list[min_h_scale_index],h_scale_list[max_h_scale_index],size_info);
     grid->set_scenario(get_world_3d()->get_scenario());
     grid->space = get_world_3d()->get_space();
+    grid->instance_id = get_instance_id();
     grid->offset = offset;
     grid->dataDir = dataDir;
     grid->layersDataDir = layersDataDir;

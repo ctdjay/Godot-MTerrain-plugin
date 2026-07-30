@@ -166,6 +166,7 @@ void MRegion::create_physics() {
 		return;
 	}
 	physic_body = PhysicsServer3D::get_singleton()->body_create();
+	PhysicsServer3D::get_singleton()->body_attach_object_instance_id(physic_body,grid->instance_id);
 	PhysicsServer3D::get_singleton()->body_set_mode(physic_body, PhysicsServer3D::BodyMode::BODY_MODE_STATIC);
 	heightmap_shape = PhysicsServer3D::get_singleton()->heightmap_shape_create();
 	Dictionary d;

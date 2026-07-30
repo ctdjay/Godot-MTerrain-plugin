@@ -1026,6 +1026,8 @@ void MCurveInstance::_generate_connection(const MCurve::ConnUpdateInfo& update_i
             ///////////////////// Creating multimesh buffer and adding shapes
             instance.ensure_physics_body_exist(path->get_space(),element->collision_layer,element->collision_mask,element->physics_material);
             RID body = instance.body;
+            // attaching object id
+            PS->body_attach_object_instance_id(body,element->get_instance_id());
             for(int i=0; i < transforms.size(); i++){
                 // should check for element->index_exist here as element->index_exist_mirror might have different result
                 if(element->index_exist(i,ov_data.random_remove[instance_index])){
