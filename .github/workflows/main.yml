@@ -17,16 +17,12 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-python-version: '3.x'
+        python-version: '3.x'
 
     - name: Install SCons
       run: python -m pip install scons
 
-    - name: Fix Directory Structure and Build
+    - name: List Files to Find Addons Folder
       run: |
-        # Rename 'addons' to 'm_terrain' to satisfy the SConstruct check
-        mv addons m_terrain
-        
-        # Navigate to the new path and compile
-        cd m_terrain/gdextension
-        scons target=template_release
+        echo "=== Root Directory Content ==="
+        ls -R
