@@ -9,7 +9,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          path: m_terrain
+
+      - name: Rename Directory for MTerrain Validation
+        run: |
+          cd ..
+          ren Godot-MTerrain-plugin m_terrain
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -21,16 +25,16 @@ jobs:
 
       - name: Build Godot C++ Bindings
         run: |
-          cd m_terrain/gdextension/godot-cpp
+          cd ../m_terrain/gdextension/godot-cpp
           scons platform=windows target=template_debug
 
       - name: Compile MTerrain Plugin
         run: |
-          cd m_terrain/gdextension
+          cd ../m_terrain/gdextension
           scons platform=windows target=template_debug
 
       - name: Upload Finished Addon Artifact
         uses: actions/upload-artifact@v4
         with:
           name: mterrain-godot4.8-windows
-          path: m_terrain/addons/
+          path: ../m_terrain/addons/
