@@ -1,0 +1,29 @@
+name: Build GDExtension
+on: [workflow_dispatch, push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install SCons
+        run: pip install scons
+
+      - name: Compile MTerrain
+        run: |
+          scons platform=windows target=template_debug
+
+      - name: Upload Finished Addon Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mterrain-godot4.8-windows
+          path: addons/
