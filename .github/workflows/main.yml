@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout repository
@@ -22,7 +22,27 @@ jobs:
     - name: Install SCons
       run: python -m pip install scons
 
-    - name: List Files to Find Addons Folder
+    - name: Fix Directory Structure and Build
       run: |
-        echo "=== Root Directory Content ==="
-        ls -R
+        # 1. Check if 'addons' folder exists in the root. If yes, rename it.
+        if [ -d "addons" ]; then
+          mv addons m_terrain
+        
+        # 2. If 'gdextension' is just sitting in the root, wrap it properly.
+        elif [ -d "gdextension" ] && [ ! -d "m_terrain" ]; then
+          mkdir m_terrain
+          mv gdextension m_terrain/
+          
+        # 3. If nothing is in the root, look inside subdirectories
+        elif [ -d "Godot-MTerrain-plugin/addons" ]; then
+          mv Godot-MTerrain-plugin/addons Godot-MTerrain-plugin/m_terrain
+          cd Godot-MTerrain-plugin/m_terrain/gdextension
+        fi
+
+        # 4. Fallback: Ensure we enter the right directory to compile
+        if [ -d "m_terrain/gdextension" ]; then
+          cd m_terrain/gdextension
+        fi
+
+        # 5. Run compilation
+        scons platform=windows arch=x86_64 target=template_release
