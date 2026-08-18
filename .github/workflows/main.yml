@@ -18,8 +18,14 @@ jobs:
       - name: Install SCons
         run: pip install scons
 
-      - name: Compile MTerrain
+      - name: Build Godot C++ Bindings
         run: |
+          cd gdextension/godot-cpp
+          scons platform=windows target=template_debug
+
+      - name: Compile MTerrain Plugin
+        run: |
+          cd gdextension
           scons platform=windows target=template_debug
 
       - name: Upload Finished Addon Artifact
