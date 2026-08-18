@@ -22,27 +22,19 @@ jobs:
     - name: Install SCons
       run: python -m pip install scons
 
-    - name: Fix Directory Structure and Build
+    - name: Configure Directory Layout and Build
       run: |
-        # 1. Check if 'addons' folder exists in the root. If yes, rename it.
-        if [ -d "addons" ]; then
-          mv addons m_terrain
+        # 1. Clear out any previous partial builds
+        rm -rf m_terrain_temp m_terrain
         
-        # 2. If 'gdextension' is just sitting in the root, wrap it properly.
-        elif [ -d "gdextension" ] && [ ! -d "m_terrain" ]; then
-          mkdir m_terrain
-          mv gdextension m_terrain/
-          
-        # 3. If nothing is in the root, look inside subdirectories
-        elif [ -d "Godot-MTerrain-plugin/addons" ]; then
-          mv Godot-MTerrain-plugin/addons Godot-MTerrain-plugin/m_terrain
-          cd Godot-MTerrain-plugin/m_terrain/gdextension
-        fi
+        # 2. Re-structure repository directories into the expected layout
+        mkdir -p m_terrain_temp/m_terrain
+        
+        # 3. Move everything from the root into the correct parent folder structure
+        find . -maxdepth 1 ! -name '.' ! -name 'm_terrain_temp' -exec mv {} m_terrain_temp/m_terrain/ \;
+        mv m_terrain_temp/m_terrain .
+        rm -rf m_terrain_temp
 
-        # 4. Fallback: Ensure we enter the right directory to compile
-        if [ -d "m_terrain/gdextension" ]; then
-          cd m_terrain/gdextension
-        fi
-
-        # 5. Run compilation
+        # 4. Navigate into the corrected gdextension folder paths and execute build
+        cd m_terrain/gdextension
         scons platform=windows arch=x86_64 target=template_release
